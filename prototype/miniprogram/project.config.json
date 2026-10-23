@@ -1,0 +1,39 @@
+{
+  "description": "酒店集团财务管理平台 · 微信小程序移动端原型（纯前端模拟数据）",
+  "projectname": "hotel-group-fms-miniprogram",
+  "appid": "touristappid",
+  "miniprogramRoot": "",
+  "compileType": "miniprogram",
+  "libVersion": "3.5.0",
+  "setting": {
+    "es6": true,
+    "enhance": true,
+    "postcss": true,
+    "minified": false,
+    "urlCheck": false,
+    "nodeModules": false,
+    "checkSiteMap": true,
+    "coverView": true,
+    "autoAudits": false,
+    "uglifyFileName": false,
+    "ignoreUploadUnusedFiles": true
+  },
+  "condition": {
+    "miniprogram": {
+      "list": [
+        {
+          "name": "工作台",
+          "pathName": "pages/workbench/workbench",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "单据详情（阻断样例）",
+          "pathName": "pages/detail/detail",
+          "query": "id=BX2026100026",
+          "scene": null
+        }
+      ]
+    }
+  }
+}

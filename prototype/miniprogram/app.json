@@ -1,0 +1,44 @@
+{
+  "pages": [
+    "pages/workbench/workbench",
+    "pages/todo/todo",
+    "pages/docs/docs",
+    "pages/mine/mine",
+    "pages/detail/detail",
+    "pages/newdoc/newdoc",
+    "pages/invadd/invadd"
+  ],
+  "window": {
+    "navigationBarTitleText": "财务工作台",
+    "navigationBarBackgroundColor": "#185FA5",
+    "navigationBarTextStyle": "white",
+    "backgroundColor": "#F5F6F8",
+    "backgroundTextStyle": "light"
+  },
+  "tabBar": {
+    "color": "#8A9099",
+    "selectedColor": "#185FA5",
+    "backgroundColor": "#FFFFFF",
+    "borderStyle": "black",
+    "list": [
+      {
+        "pagePath": "pages/workbench/workbench",
+        "text": "工作台"
+      },
+      {
+        "pagePath": "pages/todo/todo",
+        "text": "待办"
+      },
+      {
+        "pagePath": "pages/docs/docs",
+        "text": "单据"
+      },
+      {
+        "pagePath": "pages/mine/mine",
+        "text": "我的"
+      }
+    ]
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json"
+}

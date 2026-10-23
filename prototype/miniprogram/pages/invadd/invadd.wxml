@@ -1,0 +1,183 @@
+<view class="ia">
+
+  <!-- ---------- 列表态 ---------- -->
+  <block wx:if="{{!editing}}">
+    <view class="notice notice-blue ent">
+      <view>
+        上传只负责把票弄进系统，<text class="bold">识别结果要人确认才入库</text>。
+        <view class="ent-sub">纸质票请平铺拍摄、避开反光；电子发票（PDF）识别最准</view>
+      </view>
+    </view>
+
+    <!-- 上传入口 -->
+    <view class="card up">
+      <view class="up-ico">＋</view>
+      <view class="up-t">上传发票</view>
+      <view class="up-s">单张不超过 10 MB</view>
+      <view class="up-btns">
+        <view class="up-b up-b-main" bindtap="onCamera">拍照</view>
+        <view class="up-b" bindtap="onAlbum">相册</view>
+        <view class="up-b" bindtap="onManual">手工录入</view>
+      </view>
+    </view>
+
+    <!-- 待处理 -->
+    <view class="card">
+      <view class="card-ttl">
+        本次待处理
+        <text class="ttl-r">待识别 {{waitCount}} · 已识别 {{doneCount}}</text>
+      </view>
+
+      <view wx:if="{{inbox.length === 0}}" class="empty">
+        <view class="empty-t">还没有上传文件</view>
+        <view class="empty-s">点上面的「拍照」，票当场就能录进来</view>
+      </view>
+
+      <view wx:for="{{inbox}}" wx:key="id" class="it">
+        <view class="it-ico {{item.kind}}">{{item.kind === 'img' ? 'IMG' : 'PDF'}}</view>
+        <view class="it-mid">
+          <view class="it-nm">{{item.name}}</view>
+          <view class="it-sub">
+            <text wx:if="{{item.done}}">{{item.ocr.seller}} · ¥{{item.ocr.amount}}</text>
+            <text wx:else>{{item.size}} · 待识别</text>
+          </view>
+        </view>
+        <view wx:if="{{item.done}}" class="it-b it-b-main" data-id="{{item.id}}" catchtap="openEdit">确认</view>
+        <view wx:else class="it-b" data-id="{{item.id}}" catchtap="onOcr">识别</view>
+        <view class="it-x" data-id="{{item.id}}" catchtap="onRemove">×</view>
+      </view>
+    </view>
+
+    <view class="tip">
+      <text class="tip-b">为什么先入库再报销：</text>查重必须挡在入库这一步。
+      入库时拦一次，员工手上就没有这张票，后面想重复报销也没有票可用——
+      等到提交报销时才查重，错的那张已经进了单据，改起来要连带撤回审批。
+    </view>
+  </block>
+
+  <!-- ---------- 编辑态：OCR 确认 ---------- -->
+  <block wx:else>
+    <view class="notice notice-amber" wx:if="{{lowKeys.length > 0}}">
+      <view>
+        有 <text class="bold">{{lowKeys.length}}</text> 个字段识别置信度偏低（已标黄），请对照原票核对。
+        <view class="ent-sub">识别错一位数字，后面抵扣、申报、归档会一起错</view>
+      </view>
+    </view>
+
+    <view class="notice notice-red" wx:if="{{dup}}">
+      <view>
+        <text class="bold">查重命中：这张票已经在系统里了</text>
+        <view class="ent-sub">
+          首次入库：{{dup.storeName}}　开票日 {{dup.date}}　关联单据 {{dup.docId}}
+        </view>
+        <view class="ent-sub">同一张发票不得重复入库，也不得重复报销。</view>
+      </view>
+    </view>
+
+    <view class="notice notice-teal" wx:if="{{!dup && cur.code && cur.no}}">
+      <view>查重通过：14 个主体的发票索引里没有这张票，可以入库。</view>
+    </view>
+
+    <!-- 原票预览 -->
+    <view class="card shot">
+      <view class="shot-t">{{curFile}}</view>
+      <view class="shot-b">原型环境不加载真实图片。正式版此处为原票预览，可缩放旋转，右侧字段与图上位置联动高亮。</view>
+    </view>
+
+    <!-- 表单 -->
+    <view class="card">
+      <view class="card-ttl">票面信息</view>
+
+      <view class="fld {{lowKeys.indexOf('code') >= 0 ? 'low' : ''}}">
+        <view class="fld-l">发票代码 <text class="req">*</text></view>
+        <input class="fld-v in" value="{{cur.code}}" data-k="code" bindinput="onField" placeholder="12 位数字" />
+      </view>
+
+      <view class="fld {{lowKeys.indexOf('no') >= 0 ? 'low' : ''}}">
+        <view class="fld-l">发票号码 <text class="req">*</text></view>
+        <input class="fld-v in" value="{{cur.no}}" data-k="no" bindinput="onField" placeholder="8 位数字" />
+      </view>
+
+      <view class="fld">
+        <view class="fld-l">开票日期</view>
+        <input class="fld-v in" value="{{cur.date}}" data-k="date" bindinput="onField" placeholder="2026-10-20" />
+      </view>
+
+      <view class="fld">
+        <view class="fld-l">票种</view>
+        <picker mode="selector" range="{{types}}" value="{{typeIndex}}" bindchange="onType">
+          <view class="fld-v pick">{{types[typeIndex]}} ›</view>
+        </picker>
+      </view>
+
+      <view class="fld {{lowKeys.indexOf('seller') >= 0 ? 'low' : ''}}">
+        <view class="fld-l">销售方</view>
+        <input class="fld-v in" value="{{cur.seller}}" data-k="seller" bindinput="onField" placeholder="开票单位名称" />
+      </view>
+
+      <view class="fld {{lowKeys.indexOf('amount') >= 0 ? 'low' : ''}}">
+        <view class="fld-l">金额（不含税）</view>
+        <input class="fld-v in" type="digit" value="{{cur.amount}}" data-k="amount" bindinput="onField" />
+      </view>
+
+      <view class="fld {{lowKeys.indexOf('tax') >= 0 ? 'low' : ''}}">
+        <view class="fld-l">税额（票面实际）<text class="req">*</text></view>
+        <input class="fld-v in" type="digit" value="{{cur.tax}}" data-k="tax" bindinput="onField" />
+      </view>
+
+      <view class="fld">
+        <view class="fld-l">税率</view>
+        <picker mode="selector" range="{{rates}}" value="{{rateIndex}}" bindchange="onRate">
+          <view class="fld-v pick">{{rates[rateIndex]}} ›</view>
+        </picker>
+      </view>
+
+      <view class="fld">
+        <view class="fld-l">费用类目</view>
+        <picker mode="selector" range="{{cats}}" value="{{catIndex}}" bindchange="onCat">
+          <view class="fld-v pick">{{cats[catIndex]}} ›</view>
+        </picker>
+      </view>
+
+      <view class="fld">
+        <view class="fld-l">归属主体</view>
+        <picker mode="selector" range="{{storeNames}}" value="{{storeIndex}}" bindchange="onStore">
+          <view class="fld-v pick">{{storeNames[storeIndex]}} ›</view>
+        </picker>
+      </view>
+    </view>
+
+    <!-- 校验结果 -->
+    <view class="card">
+      <view class="card-ttl">入库前校验</view>
+
+      <view class="chk-row">
+        <view class="chk-l">查重（票号全局唯一）</view>
+        <view class="chk-r {{dup ? 'no' : 'ok'}}">{{dup ? '不通过' : '通过'}}</view>
+      </view>
+      <view class="chk-row">
+        <view class="chk-l">税额与税率自洽</view>
+        <view class="chk-r {{issues.length > 0 ? 'warn' : 'ok'}}">{{issues.length > 0 ? '需确认' : '通过'}}</view>
+      </view>
+      <view class="chk-row">
+        <view class="chk-l">抵扣判定（按类目）</view>
+        <view class="chk-r {{deduct === 'yes' ? 'ok' : 'mute'}}">{{deduct === 'yes' ? '可抵扣' : '不可抵扣'}}</view>
+      </view>
+
+      <view wx:for="{{issues}}" wx:key="*this" class="chk-issue">{{item}}</view>
+      <view wx:if="{{deductReason}}" class="chk-issue">{{deductReason}}</view>
+    </view>
+
+    <view class="ent-card">
+      <view class="ent-t">归属主体</view>
+      <view class="ent-v">{{storeEntity}}</view>
+      <view class="ent-s">税号 {{storeTaxNo}}　·　进项只能由该主体抵扣</view>
+    </view>
+
+    <view class="bar">
+      <view class="bar-b" bindtap="onCancel">取消</view>
+      <view class="bar-b bar-main {{dup ? 'dis' : ''}}" bindtap="onSubmit">确认并入库</view>
+    </view>
+  </block>
+
+</view>

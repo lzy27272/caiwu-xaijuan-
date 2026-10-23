@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>财务管理平台 · 手机端预览</title>
+<link rel="stylesheet" href="assets/mobile.css">
+</head>
+<body>
+
+<div class="preview-side">
+  <h1>手机端 · 移动审批</h1>
+  <p>这是手机端形态的浏览器预览。正式交付物是 <b>miniprogram/</b> 目录下的微信小程序工程，用微信开发者工具导入即可运行；本页与小程序同数据、同审批链，只用于在电脑上快速评审。</p>
+  <div>
+    <span class="pill">工作台</span><span class="pill">待办</span><span class="pill">单据</span><span class="pill">我的</span>
+  </div>
+  <p style="margin-top:12px">可以试这几步：<br>
+  1. 在「我的」里把身份切到 <b>总部财务经理</b>，回工作台看 2 张待终审单据；<br>
+  2. 点开 <b>FK2026100019</b>，看供应商账户变更的警告与「审批通过后流转至财务总监」；<br>
+  3. 打开 <b>BX2026100021</b>（业务招待），阻断级问题会让审批按钮失效。</p>
+  <div class="hint">移动端只做「轻操作」：审批、催办、看数、拍票上传。凭证生成、关账、报表编制仍留在电脑端——屏幕大小决定了职责边界，不是所有功能都该搬到手机上。</div>
+</div>
+
+<div class="frame">
+  <div class="screen" id="screen"></div>
+</div>
+
+<script src="assets/data.js"></script>
+<script src="assets/core.js"></script>
+<script src="assets/mobile-newdoc.js"></script>
+<script src="assets/mobile.js"></script>
+<script src="assets/mobile-invadd.js"></script>
+</body>
+</html>

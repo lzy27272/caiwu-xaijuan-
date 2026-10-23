@@ -1,0 +1,401 @@
+/* ================= 工作台 ================= */
+
+.wb {
+  min-height: 100vh;
+  background: #F5F6F8;
+  padding-bottom: 40rpx;
+  box-sizing: border-box;
+}
+
+/* ---------- 头图 ---------- */
+.hero {
+  background: linear-gradient(135deg, #0C447C 0%, #185FA5 52%, #378ADD 100%);
+  border-radius: 0 0 36rpx 36rpx;
+  padding: 28rpx 24rpx 52rpx;
+  color: #FFFFFF;
+}
+
+.hero-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.hero-left {
+  flex: 1;
+  min-width: 0;
+}
+
+.hero-greet {
+  font-size: 40rpx;
+  font-weight: 500;
+  letter-spacing: 1rpx;
+}
+
+.hero-date {
+  margin-top: 8rpx;
+  font-size: 22rpx;
+  color: rgba(255, 255, 255, .78);
+}
+
+.hero-role {
+  height: 52rpx;
+  line-height: 52rpx;
+  padding: 0 18rpx;
+  border-radius: 26rpx;
+  background: rgba(255, 255, 255, .18);
+  border: 1rpx solid rgba(255, 255, 255, .28);
+  font-size: 22rpx;
+  color: #FFFFFF;
+  white-space: nowrap;
+}
+
+.hero-tip {
+  margin-top: 20rpx;
+  font-size: 24rpx;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, .9);
+}
+
+.hero-chips {
+  display: flex;
+  margin-top: 22rpx;
+}
+
+.chip {
+  display: flex;
+  flex-direction: column;
+  padding: 10rpx 20rpx 10rpx 0;
+  margin-right: 28rpx;
+}
+
+.chip-k {
+  font-size: 20rpx;
+  color: rgba(255, 255, 255, .66);
+}
+
+.chip-v {
+  font-size: 28rpx;
+  font-weight: 500;
+  margin-top: 2rpx;
+}
+
+.chip-v.ok {
+  color: #B7E4D4;
+}
+
+.chip-v.warn {
+  color: #FFD9A0;
+}
+
+/* ---------- 内容区 ---------- */
+.body {
+  margin-top: -28rpx;
+  padding: 0 24rpx;
+  position: relative;
+}
+
+/* ---------- KPI ---------- */
+.kpi-grid {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.kpi {
+  width: calc((100% - 20rpx) / 2);
+  margin: 0 20rpx 20rpx 0;
+  box-sizing: border-box;
+  background: #FFFFFF;
+  border-radius: 24rpx;
+  padding: 20rpx;
+  box-shadow: 0 2rpx 14rpx rgba(12, 68, 124, .05);
+}
+
+.kpi:nth-child(even) {
+  margin-right: 0;
+}
+
+.kpi-bar {
+  width: 44rpx;
+  height: 6rpx;
+  border-radius: 4rpx;
+  margin-bottom: 14rpx;
+}
+
+.bg-blue  { background: #185FA5; }
+.bg-teal  { background: #0F6E56; }
+.bg-amber { background: #BA7517; }
+.bg-red   { background: #A32D2D; }
+.bg-gray  { background: #8A9099; }
+
+.kpi-label {
+  font-size: 22rpx;
+  color: #5A6270;
+}
+
+.kpi-value {
+  font-size: 38rpx;
+  font-weight: 500;
+  line-height: 1.25;
+  margin: 6rpx 0 4rpx;
+  color: #1B1F24;
+}
+
+.kpi-foot {
+  font-size: 20rpx;
+  line-height: 1.45;
+  color: #8A9099;
+}
+
+/* ---------- 待办 tabs ---------- */
+.tabs {
+  white-space: nowrap;
+  margin: 6rpx 0 4rpx;
+  width: 100%;
+}
+
+.tab {
+  display: inline-block;
+  padding: 12rpx 4rpx;
+  margin-right: 32rpx;
+  font-size: 26rpx;
+  color: #5A6270;
+  border-bottom: 3rpx solid transparent;
+}
+
+.tab.active {
+  color: #185FA5;
+  font-weight: 500;
+  border-bottom-color: #185FA5;
+}
+
+.tab-n {
+  font-size: 20rpx;
+  margin-left: 6rpx;
+  color: #8A9099;
+}
+
+/* ---------- 待办行 ---------- */
+.td {
+  display: flex;
+  align-items: flex-start;
+  padding: 22rpx 0;
+  border-bottom: 1rpx solid #EDEFF2;
+}
+
+.td:last-child {
+  border-bottom: none;
+  padding-bottom: 4rpx;
+}
+
+.td-main {
+  flex: 1;
+  min-width: 0;
+  padding-right: 16rpx;
+}
+
+.td-top {
+  display: flex;
+  align-items: center;
+}
+
+.td-id {
+  font-size: 22rpx;
+  color: #8A9099;
+  margin-right: 10rpx;
+}
+
+.td-title {
+  font-size: 26rpx;
+  font-weight: 500;
+  margin-top: 4rpx;
+}
+
+.td-meta {
+  font-size: 22rpx;
+  color: #5A6270;
+  margin-top: 4rpx;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.td-node {
+  font-size: 20rpx;
+  color: #8A9099;
+  margin-top: 4rpx;
+}
+
+.td-right {
+  flex: 0 0 auto;
+  text-align: right;
+  padding-top: 6rpx;
+}
+
+.td-amt {
+  display: block;
+  font-size: 28rpx;
+  font-weight: 500;
+  color: #1B1F24;
+}
+
+.td-act {
+  display: block;
+  font-size: 20rpx;
+  color: #185FA5;
+  margin-top: 8rpx;
+}
+
+/* ---------- 快捷入口 ---------- */
+.q-grid {
+  display: flex;
+  flex-wrap: wrap;
+  padding-top: 8rpx;
+}
+
+.q {
+  width: 25%;
+  text-align: center;
+  padding: 12rpx 0 6rpx;
+}
+
+.q-ic {
+  width: 76rpx;
+  height: 76rpx;
+  line-height: 76rpx;
+  margin: 0 auto;
+  border-radius: 20rpx;
+  font-size: 30rpx;
+  text-align: center;
+}
+
+.qc-blue  { background: #E6F1FB; color: #185FA5; }
+.qc-amber { background: #FAEEDA; color: #BA7517; }
+.qc-teal  { background: #E1F5EE; color: #0F6E56; }
+.qc-red   { background: #FCEBEB; color: #A32D2D; }
+.qc-gray  { background: #F1F3F5; color: #5A6270; }
+
+.q-label {
+  margin-top: 10rpx;
+  font-size: 22rpx;
+  color: #5A6270;
+}
+
+/* ---------- 财务日历 ---------- */
+.cal {
+  display: flex;
+  align-items: flex-start;
+  padding: 18rpx 0;
+  border-bottom: 1rpx solid #EDEFF2;
+}
+
+.cal:last-child {
+  border-bottom: none;
+}
+
+.cal-date {
+  flex: 0 0 76rpx;
+  text-align: center;
+  padding: 4rpx 0;
+  border-radius: 14rpx;
+  background: #F5F6F8;
+  margin-right: 20rpx;
+}
+
+.cal-dd {
+  display: block;
+  font-size: 30rpx;
+  font-weight: 500;
+  color: #185FA5;
+  line-height: 1.2;
+}
+
+.cal-mm {
+  display: block;
+  font-size: 18rpx;
+  color: #8A9099;
+}
+
+.cal-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.cal-title {
+  font-size: 26rpx;
+  line-height: 1.5;
+}
+
+.cal-meta {
+  margin-top: 8rpx;
+  display: flex;
+  align-items: center;
+}
+
+.cal-rel {
+  font-size: 20rpx;
+  color: #8A9099;
+  margin-left: 12rpx;
+}
+
+.cal.is-done .cal-title {
+  color: #A8AEB8;
+}
+
+.cal.is-done .cal-dd {
+  color: #A8AEB8;
+}
+
+.cal.is-done .tag {
+  opacity: .55;
+}
+
+.cal.is-urgent .cal-date {
+  background: #FAEEDA;
+}
+
+.cal.is-urgent .cal-dd {
+  color: #BA7517;
+}
+
+/* ---------- 通知 ---------- */
+.msg {
+  padding: 18rpx 0;
+  border-bottom: 1rpx solid #EDEFF2;
+}
+
+.msg:last-child {
+  border-bottom: none;
+}
+
+.msg-top {
+  display: flex;
+  align-items: center;
+}
+
+.msg-title {
+  flex: 1;
+  min-width: 0;
+  margin-left: 12rpx;
+  font-size: 26rpx;
+}
+
+.foot-note {
+  padding: 8rpx 0 24rpx;
+  text-align: center;
+  font-size: 20rpx;
+  color: #A8AEB8;
+}
+
+/* 可发起标记：报付两类单据支持在手机上直接新建 */
+.q-new {
+  display: inline-block;
+  margin-top: 4rpx;
+  padding: 0 10rpx;
+  height: 30rpx;
+  line-height: 30rpx;
+  border-radius: 6rpx;
+  background: #E6F1FB;
+  color: #185FA5;
+  font-size: 18rpx;
+}

@@ -1,0 +1,54 @@
+<view class="page">
+
+  <!-- 汇总 -->
+  <view class="card head">
+    <view class="head-top">
+      <view>
+        <view class="head-ttl">全部单据</view>
+        <view class="head-sub">{{scopeText}} · 共 {{total}} 张</view>
+      </view>
+      <view class="head-amt">
+        <text class="head-amt-v num">¥{{totalAmountText}}</text>
+        <text class="head-amt-k">单据金额合计</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 状态筛选 -->
+  <view class="filters">
+    <view class="filter {{item.key === filterKey ? 'active' : ''}}" wx:for="{{filters}}" wx:key="key"
+          data-key="{{item.key}}" bindtap="onFilter">
+      {{item.label}}<text class="filter-n num">{{item.count}}</text>
+    </view>
+  </view>
+
+  <!-- 列表 -->
+  <view class="card list">
+    <view class="item" wx:for="{{list}}" wx:key="id" data-id="{{item.id}}" bindtap="openDoc">
+      <view class="item-main">
+        <view class="item-hd">
+          <text class="item-id num">{{item.id}}</text>
+          <text class="tag {{item.statusClass}}">{{item.statusText}}</text>
+        </view>
+        <view class="item-title">{{item.title}}</view>
+        <view class="item-meta">{{item.meta}}</view>
+        <view class="item-time">提交 {{item.submitDate}}</view>
+      </view>
+      <view class="item-right">
+        <text class="item-amt num">¥{{item.amountText}}</text>
+        <text class="cell-arrow">›</text>
+      </view>
+    </view>
+
+    <view class="empty" wx:if="{{!list.length}}">{{emptyText}}</view>
+  </view>
+
+  <view class="foot-note">已驳回单据会退回申请人修改后重新走审批；同一发票在集团范围内只能报销一次。</view>
+
+</view>
+
+<!-- 悬浮发起入口 -->
+<view class="fab" bindtap="onNew">
+  <text class="fab-plus">+</text>
+  <text class="fab-tx">发起</text>
+</view>

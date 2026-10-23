@@ -1,0 +1,318 @@
+/* ================= 发票采集（小程序端） ================= */
+
+.ia {
+  padding: 24rpx 24rpx 60rpx;
+  box-sizing: border-box;
+  min-height: 100vh;
+  background: #F5F6F8;
+}
+
+/* ---------- 上传区 ---------- */
+.up {
+  text-align: center;
+  padding: 44rpx 30rpx 36rpx;
+  margin-bottom: 24rpx;
+}
+
+.up-ico {
+  width: 96rpx;
+  height: 96rpx;
+  line-height: 92rpx;
+  margin: 0 auto 18rpx;
+  border-radius: 50%;
+  background: #EAF1FB;
+  color: #185FA5;
+  font-size: 48rpx;
+  font-weight: 300;
+}
+
+.up-t {
+  font-size: 30rpx;
+  color: #1B2028;
+  font-weight: 500;
+}
+
+.up-s {
+  font-size: 22rpx;
+  color: #8A9099;
+  margin-top: 8rpx;
+}
+
+.up-btns {
+  display: flex;
+  gap: 16rpx;
+  margin-top: 28rpx;
+}
+
+.up-b {
+  flex: 1;
+  height: 76rpx;
+  line-height: 76rpx;
+  text-align: center;
+  font-size: 27rpx;
+  color: #185FA5;
+  background: #F0F5FC;
+  border-radius: 14rpx;
+}
+
+.up-b-main {
+  background: #185FA5;
+  color: #FFFFFF;
+}
+
+/* ---------- 待处理列表 ---------- */
+.it {
+  display: flex;
+  align-items: center;
+  padding: 22rpx 0;
+  border-bottom: 1rpx solid #EDEFF2;
+}
+
+.it:last-child {
+  border-bottom: none;
+}
+
+.it-ico {
+  width: 64rpx;
+  height: 64rpx;
+  line-height: 64rpx;
+  text-align: center;
+  border-radius: 12rpx;
+  font-size: 19rpx;
+  font-weight: 600;
+  flex: none;
+}
+
+.it-ico.img {
+  background: #EAF3FF;
+  color: #2C6FD1;
+}
+
+.it-ico.pdf {
+  background: #FDECEC;
+  color: #C8443C;
+}
+
+.it-mid {
+  flex: 1;
+  min-width: 0;
+  padding: 0 18rpx;
+}
+
+.it-nm {
+  font-size: 26rpx;
+  color: #1B2028;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.it-sub {
+  font-size: 22rpx;
+  color: #8A9099;
+  margin-top: 6rpx;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.it-b {
+  flex: none;
+  padding: 0 24rpx;
+  height: 60rpx;
+  line-height: 60rpx;
+  font-size: 24rpx;
+  color: #185FA5;
+  background: #F0F5FC;
+  border-radius: 12rpx;
+}
+
+.it-b-main {
+  background: #185FA5;
+  color: #FFFFFF;
+}
+
+.it-x {
+  flex: none;
+  width: 56rpx;
+  text-align: right;
+  font-size: 34rpx;
+  color: #B9BFC7;
+  font-weight: 300;
+}
+
+/* ---------- 空态 ---------- */
+.empty {
+  padding: 60rpx 0;
+  text-align: center;
+}
+
+.empty-t {
+  font-size: 26rpx;
+  color: #6B7280;
+}
+
+.empty-s {
+  font-size: 22rpx;
+  color: #A8AEB6;
+  margin-top: 10rpx;
+}
+
+/* ---------- 底部说明 ---------- */
+.tip {
+  margin-top: 24rpx;
+  padding: 24rpx;
+  background: #F0F5FC;
+  border-radius: 16rpx;
+  font-size: 22rpx;
+  line-height: 1.75;
+  color: #4A5563;
+}
+
+.tip-b {
+  color: #185FA5;
+  font-weight: 500;
+}
+
+/* ---------- 编辑态：原票预览 ---------- */
+.shot {
+  padding: 26rpx;
+}
+
+.shot-t {
+  font-size: 24rpx;
+  color: #1B2028;
+  margin-bottom: 14rpx;
+  font-weight: 500;
+}
+
+.shot-b {
+  padding: 40rpx 24rpx;
+  background: #F4F6F9;
+  border-radius: 14rpx;
+  font-size: 21rpx;
+  line-height: 1.7;
+  color: #8A9099;
+  text-align: center;
+}
+
+/* ---------- 低置信字段标黄 ---------- */
+.fld.low .fld-v {
+  background: #FFFBF0;
+  border-radius: 8rpx;
+}
+
+.fld.low .fld-l::after {
+  content: ' · 低置信';
+  color: #C8871A;
+  font-size: 19rpx;
+}
+
+/* ---------- 校验结果 ---------- */
+.chk-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20rpx 0;
+  border-bottom: 1rpx solid #EDEFF2;
+}
+
+.chk-l {
+  font-size: 25rpx;
+  color: #4A5563;
+}
+
+.chk-r {
+  font-size: 24rpx;
+  font-weight: 500;
+}
+
+.chk-r.ok {
+  color: #1E8A6E;
+}
+
+.chk-r.no {
+  color: #C8443C;
+}
+
+.chk-r.warn {
+  color: #C8871A;
+}
+
+.chk-r.mute {
+  color: #8A9099;
+}
+
+.chk-issue {
+  margin-top: 16rpx;
+  padding: 16rpx 18rpx;
+  background: #FFFBF0;
+  border-left: 5rpx solid #E2B15A;
+  border-radius: 8rpx;
+  font-size: 21rpx;
+  line-height: 1.7;
+  color: #8A6116;
+}
+
+/* ---------- 归属主体 ---------- */
+.ent-card {
+  margin-top: 24rpx;
+  padding: 26rpx;
+  background: #FFFFFF;
+  border-radius: 18rpx;
+}
+
+.ent-t {
+  font-size: 22rpx;
+  color: #8A9099;
+}
+
+.ent-v {
+  font-size: 27rpx;
+  color: #1B2028;
+  font-weight: 500;
+  margin-top: 10rpx;
+}
+
+.ent-s {
+  font-size: 21rpx;
+  color: #8A9099;
+  margin-top: 8rpx;
+}
+
+/* ---------- 底部提交栏 ---------- */
+.bar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  gap: 16rpx;
+  padding: 20rpx 24rpx calc(20rpx + env(safe-area-inset-bottom));
+  background: #FFFFFF;
+  box-shadow: 0 -4rpx 16rpx rgba(15, 40, 80, .06);
+}
+
+.bar-b {
+  height: 88rpx;
+  line-height: 88rpx;
+  text-align: center;
+  font-size: 29rpx;
+  border-radius: 16rpx;
+  flex: none;
+  padding: 0 44rpx;
+  background: #F0F2F5;
+  color: #4A5563;
+}
+
+.bar-main {
+  flex: 1;
+  background: #185FA5;
+  color: #FFFFFF;
+  font-weight: 500;
+}
+
+.bar-main.dis {
+  background: #B9C2CE;
+  color: #F4F6F9;
+}

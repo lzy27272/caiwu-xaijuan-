@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>黔宿酒店集团 · 财务管理平台（原型）</title>
+<link rel="stylesheet" href="assets/app.css">
+</head>
+<body>
+
+<div class="demo-hint" id="demoHint">
+  <strong>这是一个可试用的原型。</strong>所有数据均为模拟数据，用于验证流程与操作习惯，不连接任何真实系统。左上角可以切换「角色」，同一张单据在不同角色下可见的操作权限不同——建议重点体验这一点。
+  <button class="demo-hint-close" onclick="document.getElementById('demoHint').style.display='none'">知道了</button>
+</div>
+
+<div class="app" id="app">
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="brand-mark">云</div>
+      <div class="brand-text">
+        <div class="brand-name">黔宿酒店集团</div>
+        <div class="brand-sub">财务管理平台 · 原型</div>
+      </div>
+    </div>
+
+    <div class="role-switch">
+      <label class="role-label">当前身份</label>
+      <select id="roleSelect" class="role-select" onchange="App.setRole(this.value)">
+      </select>
+      <div class="role-desc" id="roleDesc"></div>
+    </div>
+
+    <nav class="nav" id="nav"></nav>
+
+    <div class="sidebar-foot">
+      <div class="sf-row"><span>期间</span><strong>2026 年 9 月</strong></div>
+      <div class="sf-row"><span>主体</span><strong>14 家独立法人</strong></div>
+      <div class="sf-row"><span>状态</span><strong class="ok">已结账</strong></div>
+    </div>
+  </aside>
+
+  <main class="main">
+    <header class="topbar">
+      <div class="topbar-left">
+        <h1 class="page-title" id="pageTitle">集团经营总览</h1>
+        <span class="page-sub" id="pageSub"></span>
+      </div>
+      <div class="topbar-right">
+        <a class="btn btn-sm" href="mobile.html" target="_blank" style="text-decoration:none;display:inline-flex;align-items:center">手机端预览 ↗</a>
+        <div class="entity-picker" id="entityPicker"></div>
+        <div class="user-chip" id="userChip"></div>
+      </div>
+    </header>
+    <div class="content" id="content"></div>
+  </main>
+</div>
+
+<div class="toast-wrap" id="toastWrap"></div>
+<div class="modal-mask" id="modalMask" onclick="if(event.target===this)App.closeModal()">
+  <div class="modal" id="modal"></div>
+</div>
+
+<script src="assets/data.js"></script>
+<script src="assets/core.js"></script>
+<script src="assets/view-workbench.js"></script>
+<script src="assets/view-dashboard.js"></script>
+<script src="assets/view-flow.js"></script>
+<script src="assets/view-invoice.js"></script>
+<script src="assets/view-invadd.js"></script>
+<script src="assets/view-account.js"></script>
+<script src="assets/attach.js"></script>
+<script src="assets/export.js"></script>
+<script src="assets/boot.js"></script>
+</body>
+</html>

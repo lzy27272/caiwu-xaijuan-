@@ -1,0 +1,70 @@
+<view class="page">
+
+  <!-- ---------- 身份卡 ---------- -->
+  <view class="idcard">
+    <view class="id-top">
+      <view class="avatar">{{avatarChar}}</view>
+      <view class="id-info">
+        <view class="id-name">{{roleName}}</view>
+        <view class="id-desc">{{roleDesc}}</view>
+      </view>
+      <picker mode="selector" range="{{roles}}" range-key="name" value="{{roleIndex}}" bindchange="onRoleChange">
+        <view class="id-switch">切换身份 ›</view>
+      </picker>
+    </view>
+    <view class="id-note">切换后，工作台 / 待办 / 单据的数据范围同步变化</view>
+  </view>
+
+  <!-- ---------- 统计 ---------- -->
+  <view class="card stats">
+    <view class="stat">
+      <view class="stat-v num">{{myDocsCount}}</view>
+      <view class="stat-k">我的单据（张）</view>
+    </view>
+    <view class="stat-line"></view>
+    <view class="stat">
+      <view class="stat-v num">{{invUnused}}</view>
+      <view class="stat-k">发票待认证</view>
+    </view>
+    <view class="stat-line"></view>
+    <view class="stat">
+      <view class="stat-v num {{budgetOver ? 'c-bad' : ''}}">{{budgetRate}}</view>
+      <view class="stat-k">预算执行率</view>
+    </view>
+  </view>
+
+  <!-- ---------- 会计期间 ---------- -->
+  <view class="card">
+    <view class="card-hd">
+      <view class="card-ttl">会计期间<text class="sub">按法人主体分别结账</text></view>
+    </view>
+    <view class="row-line">
+      <text class="rl-k">当前期间</text>
+      <text class="rl-v">{{period}} · 进行中</text>
+    </view>
+    <view class="row-line">
+      <text class="rl-k">上一期间</text>
+      <text class="rl-v">{{prevPeriod}}<text class="tag tag-teal" style="margin-left:10rpx">已关账</text></text>
+    </view>
+    <view class="row-line">
+      <text class="rl-k">数据范围</text>
+      <text class="rl-v rl-scope">{{scopeText}}</text>
+    </view>
+    <view class="rl-note">14 家酒店均为独立法人，分别建账、分别申报；集团层面只做合并报表与统一口径，不做汇总纳税。</view>
+  </view>
+
+  <!-- ---------- 功能入口 ---------- -->
+  <view class="card menu">
+    <view class="m-item" wx:for="{{menu}}" wx:key="key" data-idx="{{index}}" bindtap="onMenu">
+      <view class="m-ic qc-{{item.color}}">{{item.ch}}</view>
+      <view class="m-main">
+        <view class="m-label">{{item.label}}</view>
+        <view class="m-sub">{{item.sub}}</view>
+      </view>
+      <text class="cell-arrow">›</text>
+    </view>
+  </view>
+
+  <view class="foot-note">数据截至 {{demoDate}} · 仅用于方案演示，不连接真实系统</view>
+
+</view>

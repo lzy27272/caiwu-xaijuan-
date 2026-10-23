@@ -1,0 +1,183 @@
+/* ================= 单据 ================= */
+
+.head {
+  padding: 24rpx;
+}
+
+.head-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.head-ttl {
+  font-size: 34rpx;
+  font-weight: 500;
+}
+
+.head-sub {
+  margin-top: 6rpx;
+  font-size: 22rpx;
+  color: #8A9099;
+  max-width: 420rpx;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.head-amt {
+  text-align: right;
+  flex: 0 0 auto;
+}
+
+.head-amt-v {
+  display: block;
+  font-size: 32rpx;
+  font-weight: 500;
+  color: #185FA5;
+}
+
+.head-amt-k {
+  display: block;
+  font-size: 20rpx;
+  color: #8A9099;
+}
+
+/* ---------- 筛选 ---------- */
+.filters {
+  display: flex;
+  margin-bottom: 20rpx;
+}
+
+.filter {
+  flex: 1;
+  height: 64rpx;
+  line-height: 64rpx;
+  margin-right: 12rpx;
+  text-align: center;
+  border-radius: 16rpx;
+  background: #FFFFFF;
+  font-size: 24rpx;
+  color: #5A6270;
+}
+
+.filter:last-child {
+  margin-right: 0;
+}
+
+.filter.active {
+  background: #185FA5;
+  color: #FFFFFF;
+  font-weight: 500;
+}
+
+.filter-n {
+  font-size: 20rpx;
+  margin-left: 6rpx;
+  opacity: .75;
+}
+
+/* ---------- 列表 ---------- */
+.list {
+  padding: 4rpx 24rpx;
+}
+
+.item {
+  display: flex;
+  align-items: flex-start;
+  padding: 22rpx 0;
+  border-bottom: 1rpx solid #EDEFF2;
+}
+
+.item:last-child {
+  border-bottom: none;
+}
+
+.item-main {
+  flex: 1;
+  min-width: 0;
+  padding-right: 16rpx;
+}
+
+.item-hd {
+  display: flex;
+  align-items: center;
+}
+
+.item-id {
+  font-size: 22rpx;
+  color: #8A9099;
+  margin-right: 12rpx;
+}
+
+.item-title {
+  margin-top: 6rpx;
+  font-size: 28rpx;
+  font-weight: 500;
+  line-height: 1.45;
+}
+
+.item-meta {
+  margin-top: 4rpx;
+  font-size: 22rpx;
+  color: #5A6270;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.item-time {
+  margin-top: 6rpx;
+  font-size: 20rpx;
+  color: #A8AEB8;
+}
+
+.item-right {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  padding-top: 24rpx;
+}
+
+.item-amt {
+  font-size: 28rpx;
+  font-weight: 500;
+}
+
+.foot-note {
+  padding: 4rpx 8rpx 24rpx;
+  font-size: 20rpx;
+  line-height: 1.6;
+  color: #A8AEB8;
+}
+
+/* ---------- 悬浮发起入口 ---------- */
+.fab {
+  position: fixed;
+  right: 32rpx;
+  bottom: calc(140rpx + env(safe-area-inset-bottom));
+  display: flex;
+  align-items: center;
+  height: 88rpx;
+  padding: 0 30rpx 0 24rpx;
+  border-radius: 44rpx;
+  background: linear-gradient(135deg, #185FA5 0%, #378ADD 100%);
+  box-shadow: 0 8rpx 24rpx rgba(24, 95, 165, .34);
+  color: #FFFFFF;
+  z-index: 20;
+}
+
+.fab:active {
+  opacity: .86;
+}
+
+.fab-plus {
+  font-size: 40rpx;
+  line-height: 1;
+  margin-right: 10rpx;
+  margin-top: -4rpx;
+}
+
+.fab-tx {
+  font-size: 26rpx;
+}

@@ -1,0 +1,64 @@
+<view class="page">
+
+  <!-- 身份与范围 -->
+  <view class="who">
+    <text class="who-role">{{roleName}}</text>
+    <text class="who-scope">数据范围：{{scopeText}}</text>
+  </view>
+
+  <!-- 三项统计 -->
+  <view class="card stats">
+    <view class="stat">
+      <view class="stat-v num c-warn">{{approveCount}}</view>
+      <view class="stat-k">待我审批（张）</view>
+    </view>
+    <view class="stat-line"></view>
+    <view class="stat">
+      <view class="stat-v num">¥{{approveAmountText}}</view>
+      <view class="stat-k">合计金额</view>
+    </view>
+    <view class="stat-line"></view>
+    <view class="stat">
+      <view class="stat-v num {{blockCount ? 'c-bad' : ''}}">{{blockCount}}</view>
+      <view class="stat-k">其中阻断级</view>
+    </view>
+  </view>
+
+  <!-- 分栏 -->
+  <scroll-view class="tabs" scroll-x="{{true}}" enhanced="{{true}}" show-scrollbar="{{false}}">
+    <view class="tab {{item.key === tabKey ? 'active' : ''}}" wx:for="{{tabs}}" wx:key="key"
+          data-key="{{item.key}}" bindtap="onTab">
+      {{item.label}}<text class="tab-n num">{{item.count}}</text>
+    </view>
+  </scroll-view>
+
+  <!-- 列表 -->
+  <view class="card list">
+    <view class="item" wx:for="{{list}}" wx:key="id" data-id="{{item.id}}" bindtap="openDoc">
+      <view class="item-hd">
+        <text class="item-id num">{{item.id}}</text>
+        <text class="tag {{item.riskClass}}">{{item.riskText}}</text>
+        <view class="flex1"></view>
+        <text class="tag {{item.statusClass}}">{{item.statusText}}</text>
+      </view>
+
+      <view class="item-title">{{item.title}}</view>
+      <view class="item-meta">{{item.meta}}</view>
+
+      <view class="item-foot">
+        <view class="item-node">
+          <text class="node-k">当前节点</text>
+          <text class="node-v">{{item.nodeName}} · {{item.nodeWho}}</text>
+        </view>
+        <text class="item-amt num">¥{{item.amountText}}</text>
+      </view>
+
+      <view class="item-time">提交 {{item.submitDate}}</view>
+    </view>
+
+    <view class="empty" wx:if="{{!list.length}}">{{emptyText}}</view>
+  </view>
+
+  <view class="foot-note" wx:if="{{list.length}}">{{tabLabel}}共 {{list.length}} 条 · 点击查看审批链与票据明细</view>
+
+</view>

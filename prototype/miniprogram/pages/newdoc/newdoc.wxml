@@ -1,0 +1,197 @@
+<view class="nd">
+
+  <!-- ---------- 顶部：单据类型切换 ---------- -->
+  <view class="seg">
+    <view class="seg-i {{type === 'expense' ? 'on' : ''}}" data-type="expense" bindtap="onType">费用报销</view>
+    <view class="seg-i {{type === 'payment' ? 'on' : ''}}" data-type="payment" bindtap="onType">付款申请</view>
+  </view>
+
+  <!-- ---------- 主体说明 ---------- -->
+  <view class="notice notice-blue ent">
+    <view>
+      当前主体：<text class="bold">{{entityName}}</text> · 税号 {{taxNo}}
+      <view class="ent-sub">发票抬头、收款账户须与此主体一致，否则无法提交</view>
+    </view>
+  </view>
+
+  <!-- ---------- 基本信息 ---------- -->
+  <view class="card">
+    <view class="card-ttl">基本信息</view>
+
+    <view class="fld" wx:if="{{!storeLocked}}">
+      <view class="fld-l">付款主体 <text class="req">*</text></view>
+      <picker mode="selector" range="{{storeNames}}" value="{{storeIndex}}" bindchange="onStore">
+        <view class="fld-v pick">{{storeNames[storeIndex]}} ›</view>
+      </picker>
+    </view>
+    <view class="fld" wx:else>
+      <view class="fld-l">归属门店</view>
+      <view class="fld-v">{{storeName}}</view>
+    </view>
+
+    <view class="fld">
+      <view class="fld-l">{{type === 'expense' ? '报销人' : '申请人'}}</view>
+      <input class="fld-v in" value="{{person}}" data-key="person" bindinput="onInput" placeholder="请输入姓名" />
+    </view>
+
+    <view class="fld">
+      <view class="fld-l">部门</view>
+      <input class="fld-v in" value="{{dept}}" data-key="dept" bindinput="onInput" placeholder="如：客房部" />
+    </view>
+
+    <view class="fld" wx:if="{{type === 'payment'}}">
+      <view class="fld-l">付款类型 <text class="req">*</text></view>
+      <picker mode="selector" range="{{payTypeNames}}" value="{{payTypeIndex}}" bindchange="onPayType">
+        <view class="fld-v pick">{{payTypeName}} ›</view>
+      </picker>
+    </view>
+
+    <view class="fld" wx:if="{{type === 'payment'}}">
+      <view class="fld-l">期望付款日</view>
+      <picker mode="date" value="{{payDate}}" bindchange="onDate">
+        <view class="fld-v pick">{{payDate}} ›</view>
+      </picker>
+    </view>
+
+    <view class="fld">
+      <view class="fld-l">事由</view>
+      <input class="fld-v in" value="{{note}}" data-key="note" bindinput="onInput"
+             placeholder="{{type === 'expense' ? '如：9月客房补充采购' : '如：10月货款第四批'}}" />
+    </view>
+
+    <view class="hint" wx:if="{{type === 'payment'}}">{{payTypeNote}}</view>
+  </view>
+
+  <!-- ---------- 费用项目（两级） ---------- -->
+  <view class="card">
+    <view class="card-ttl">费用项目<text class="sub">一级大类 → 二级明细</text></view>
+
+    <view class="fld">
+      <view class="fld-l">一级大类 <text class="req">*</text></view>
+      <picker mode="selector" range="{{groupNames}}" value="{{groupIndex}}" bindchange="onGroup">
+        <view class="fld-v pick">{{groupName}} ›</view>
+      </picker>
+    </view>
+
+    <view class="fld">
+      <view class="fld-l">二级明细 <text class="req">*</text></view>
+      <picker mode="selector" range="{{itemNames}}" value="{{itemIndex}}" bindchange="onItem">
+        <view class="fld-v pick">{{itemName}} ›</view>
+      </picker>
+    </view>
+
+    <view class="fld">
+      <view class="fld-l">金额（元） <text class="req">*</text></view>
+      <input class="fld-v in num amt-in" type="digit" value="{{amount}}" data-key="amount"
+             bindinput="onInput" placeholder="0.00" />
+    </view>
+
+    <view class="hint">
+      归集至预算项「{{budgetItem || '—'}}」· 预算控制落在二级明细，报表汇总按一级大类
+    </view>
+  </view>
+
+  <!-- ---------- 收款信息 ---------- -->
+  <view class="card">
+    <view class="card-ttl">
+      收款信息
+      <text class="sub">{{type === 'expense' ? '报销款将打入以下账户' : '须与供应商主数据一致'}}</text>
+    </view>
+
+    <!-- 常用账户卡片 -->
+    <scroll-view class="hscroll" scroll-x="{{true}}" wx:if="{{acctCandidates.length}}">
+      <view class="accts">
+        <view class="acct {{acctIndex === index ? 'on' : ''}}"
+              wx:for="{{acctCandidates}}" wx:key="id"
+              data-idx="{{index}}" bindtap="useAcct">
+          <view class="acct-bank ellipsis">{{item.bank}}</view>
+          <view class="acct-no num">{{item.account}}</view>
+          <view class="acct-meta ellipsis">{{item.meta}}</view>
+        </view>
+      </view>
+    </scroll-view>
+
+    <view class="fld">
+      <view class="fld-l">收款人 / 收款方 <text class="req">*</text></view>
+      <input class="fld-v in" value="{{payee}}" data-key="payee" bindinput="onInput" placeholder="请输入名称" />
+    </view>
+
+    <view class="fld">
+      <view class="fld-l">开户行 <text class="req">*</text></view>
+      <input class="fld-v in" value="{{bank}}" data-key="bank" bindinput="onInput" placeholder="如：招商银行贵阳分行营业部" />
+    </view>
+
+    <view class="fld">
+      <view class="fld-l">银行账号 <text class="req">*</text></view>
+      <input class="fld-v in num" value="{{account}}" data-key="account" bindinput="onInput" placeholder="请输入银行账号" />
+    </view>
+
+    <view class="remember" wx:if="{{type === 'expense'}}">
+      <view class="rm-l">记住本次账户，下次自动带出</view>
+      <switch checked="{{remember}}" color="#185FA5" bindchange="onRemember" />
+    </view>
+  </view>
+
+  <!-- ---------- 其他附件 ---------- -->
+  <view class="card">
+    <view class="card-ttl">
+      其他附件
+      <text class="sub">{{type === 'payment' ? '至少 1 个' : '非发票材料'}}</text>
+    </view>
+    <view class="att-hint">合同、验收单、对账单、会议签到表、现场照片等，作为业务真实性依据；不参与发票查重与抵扣。</view>
+
+    <view class="att-btns">
+      <view class="att-btn" bindtap="onCamera"><text class="att-ic">拍</text>拍照</view>
+      <view class="att-btn" bindtap="onAlbum"><text class="att-ic">相</text>相册</view>
+      <view class="att-btn" bindtap="onFile"><text class="att-ic">件</text>聊天文件</view>
+    </view>
+
+    <view class="att" wx:for="{{attach}}" wx:key="name">
+      <text class="tag {{item.kindCls}}">{{item.kindLabel}}</text>
+      <view class="att-mid">
+        <view class="ellipsis">{{item.name}}</view>
+        <view class="t-aux">{{item.src}} · {{item.size}} · {{item.time}}</view>
+      </view>
+      <view class="att-del" data-idx="{{index}}" bindtap="delAttach">删除</view>
+    </view>
+
+    <view class="empty" wx:if="{{!attach.length}}" style="padding:36rpx 0">
+      暂无附件{{type === 'payment' ? '，付款申请至少需 1 个依据附件' : ''}}
+    </view>
+  </view>
+
+  <!-- ---------- 实时校验 ---------- -->
+  <view class="card" wx:if="{{checks.length}}">
+    <view class="card-ttl">提交前检查<text class="sub">{{checks.length}} 项需注意</text></view>
+    <view class="chk {{item.level === 'red' ? 'chk-red' : 'chk-amber'}}"
+          wx:for="{{checks}}" wx:key="title">
+      <view class="chk-t">{{item.title}}</view>
+      <view class="chk-x">{{item.text}}</view>
+    </view>
+  </view>
+
+  <view class="card ok-card" wx:if="{{!checks.length && amount}}">
+    <view class="notice notice-blue" style="background:#E1F5EE;color:#0F6E56">
+      <view>校验通过：费用明细「{{itemName}}」归集至预算项「{{budgetItem}}」，收款账户完整，未发现拆单与预算风险。</view>
+    </view>
+  </view>
+
+  <view class="tip">发票请在工作台「发票池」上传或由系统 OCR 识别后勾选；本页仅收非发票材料。</view>
+</view>
+
+<!-- ---------- 底部提交栏 ---------- -->
+<view class="bar">
+  <view class="bar-amt">
+    <text class="t-aux">合计</text>
+    <text class="bar-num num">¥{{amountText}}</text>
+  </view>
+  <view class="bar-btns">
+    <view class="btn btn-ghost" bindtap="cancel">取消</view>
+    <view class="btn {{canSubmit ? 'btn-primary' : 'btn-disabled'}}" bindtap="submit">
+      {{canSubmit ? '提交审批' : '待完善'}}
+    </view>
+  </view>
+</view>
+
+<!-- ---------- 轻提示 ---------- -->
+<view class="mp-toast {{toastType === 'err' ? 'mp-toast-err' : ''}}" wx:if="{{toastShow}}">{{toastMsg}}</view>

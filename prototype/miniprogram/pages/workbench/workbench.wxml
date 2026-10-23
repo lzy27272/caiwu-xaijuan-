@@ -1,0 +1,134 @@
+<view class="wb">
+
+  <!-- ---------- 头图 ---------- -->
+  <view class="hero">
+    <view class="hero-head">
+      <view class="hero-left">
+        <view class="hero-greet">{{greeting}}，{{roleName}}</view>
+        <view class="hero-date">{{dateText}}</view>
+      </view>
+      <picker mode="selector" range="{{roles}}" range-key="name" value="{{roleIndex}}" bindchange="onRoleChange">
+        <view class="hero-role">切换身份 ▾</view>
+      </picker>
+    </view>
+
+    <view class="hero-tip">{{summary}}</view>
+
+    <view class="hero-chips">
+      <view class="chip">
+        <text class="chip-k">会计期间</text>
+        <text class="chip-v num">{{period}}</text>
+      </view>
+      <view class="chip">
+        <text class="chip-k">上月</text>
+        <text class="chip-v ok">已关账</text>
+      </view>
+      <view class="chip">
+        <text class="chip-k">我的待办</text>
+        <text class="chip-v warn num">{{todoBadge}}</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="body">
+
+    <!-- ---------- KPI 2×2 ---------- -->
+    <view class="kpi-grid">
+      <view class="kpi" wx:for="{{kpis}}" wx:key="label" data-target="{{item.target}}" bindtap="onKpi">
+        <view class="kpi-bar bg-{{item.color}}"></view>
+        <view class="kpi-label">{{item.label}}</view>
+        <view class="kpi-value num">{{item.value}}</view>
+        <view class="kpi-foot">{{item.foot}}</view>
+      </view>
+    </view>
+
+    <!-- ---------- 我的待办 ---------- -->
+    <view class="card">
+      <view class="card-hd">
+        <view class="card-ttl">我的待办<text class="sub">按角色自动推送</text></view>
+        <text class="card-more" bindtap="goTodo">全部 {{todoTotal}} ›</text>
+      </view>
+
+      <scroll-view class="tabs" scroll-x="{{true}}" enhanced="{{true}}" show-scrollbar="{{false}}">
+        <view class="tab {{item.key === tabKey ? 'active' : ''}}" wx:for="{{tabs}}" wx:key="key"
+              data-key="{{item.key}}" bindtap="onTab">
+          {{item.label}}<text class="tab-n num">{{item.count}}</text>
+        </view>
+      </scroll-view>
+
+      <view class="td" wx:for="{{todos}}" wx:key="id" data-id="{{item.id}}" bindtap="openDoc">
+        <view class="td-main">
+          <view class="td-top">
+            <text class="td-id num">{{item.id}}</text>
+            <text class="tag {{item.riskClass}}" wx:if="{{item.riskText}}">{{item.riskText}}</text>
+          </view>
+          <view class="td-title ellipsis">{{item.title}}</view>
+          <view class="td-meta">{{item.meta}}</view>
+          <view class="td-node">{{item.nodeName}}</view>
+        </view>
+        <view class="td-right">
+          <text class="td-amt num">¥{{item.amountText}}</text>
+          <text class="td-act">{{item.actionText}} ›</text>
+        </view>
+      </view>
+
+      <view class="empty" wx:if="{{!todos.length}}">这一类暂时没有需要处理的事项。</view>
+    </view>
+
+    <!-- ---------- 快捷入口 ---------- -->
+    <view class="card">
+      <view class="card-hd">
+        <view class="card-ttl">快捷入口<text class="sub">按你的权限显示</text></view>
+      </view>
+      <view class="q-grid">
+        <view class="q" wx:for="{{quick}}" wx:key="key" data-page="{{item.page}}" bindtap="onQuick">
+          <view class="q-ic qc-{{item.color}}">{{item.ch}}</view>
+          <view class="q-label">{{item.label}}</view>
+          <view class="q-new" wx:if="{{item.page === 'newdoc-exp' || item.page === 'newdoc-pay'}}">可发起</view>
+        </view>
+      </view>
+    </view>
+
+    <!-- ---------- 财务日历 ---------- -->
+    <view class="card">
+      <view class="card-hd">
+        <view class="card-ttl">财务日历<text class="sub">申报、付款、关账节点</text></view>
+        <text class="t-aux">{{calendar.length}} 个节点</text>
+      </view>
+
+      <view class="cal {{item.done ? 'is-done' : ''}} {{item.urgent ? 'is-urgent' : ''}}"
+            wx:for="{{calendar}}" wx:key="key">
+        <view class="cal-date">
+          <text class="cal-dd num">{{item.dd}}</text>
+          <text class="cal-mm">{{item.mm}}</text>
+        </view>
+        <view class="cal-body">
+          <view class="cal-title two-line">{{item.title}}</view>
+          <view class="cal-meta">
+            <text class="tag {{item.typeCls}}">{{item.typeLabel}}</text>
+            <text class="cal-rel {{item.urgent ? 'c-warn' : ''}}">{{item.rel}}</text>
+          </view>
+        </view>
+      </view>
+
+      <view class="empty" wx:if="{{!calendar.length}}">暂无与本角色相关的财务节点。</view>
+    </view>
+
+    <!-- ---------- 通知与制度 ---------- -->
+    <view class="card">
+      <view class="card-hd">
+        <view class="card-ttl">通知与制度<text class="sub">{{notices.length}} 条</text></view>
+      </view>
+      <view class="msg" wx:for="{{notices}}" wx:key="id" data-idx="{{index}}" bindtap="onNotice">
+        <view class="msg-top">
+          <text class="tag tag-blue">{{item.tag}}</text>
+          <text class="msg-title ellipsis">{{item.title}}</text>
+        </view>
+        <view class="t-aux">{{item.date}}</view>
+      </view>
+      <view class="empty" wx:if="{{!notices.length}}">当前角色暂无通知。</view>
+    </view>
+
+    <view class="foot-note">数据截至 {{period}} · 演示用模拟数据，不连接真实系统</view>
+  </view>
+</view>
